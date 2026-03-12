@@ -48,14 +48,8 @@ public class MurmurHash extends Hash {
 
     for (int i = 0; i < len_4; i++) {
       int i_4 = (i << 2);
-      int k = hashKey.get(i_4 + 3);
-      k = k << 8;
-      k = k | (hashKey.get(i_4 + 2) & 0xff);
-      k = k << 8;
-      k = k | (hashKey.get(i_4 + 1) & 0xff);
-      k = k << 8;
-      // noinspection PointlessArithmeticExpression
-      k = k | (hashKey.get(i_4 + 0) & 0xff);
+      // Much faster than reading byte one by one
+      int k = hashKey.getIntLE(i_4);
       k *= m;
       k ^= k >>> r;
       k *= m;
